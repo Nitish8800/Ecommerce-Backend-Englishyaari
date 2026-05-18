@@ -1,0 +1,13 @@
+# Node modules
+node_modules/
+
+# Environment variables
+.env
+
+# Logs
+logs/
+*.log
+
+# Documentation
+src/docs/*.postman_collection.json
+src/docs/*.swagger.json 
