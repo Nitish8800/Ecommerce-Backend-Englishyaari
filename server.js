@@ -40,7 +40,7 @@ const BASE_URL =
 
 swaggerSpec.servers = [
   {
-    url: BASE_URL/api,
+    url: `${BASE_URL}/api`,
     description:
       process.env.NODE_ENV === "production"
         ? "Production Server"
