@@ -8,6 +8,7 @@ A secure, RESTful backend API built for user authentication, product management,
 
 ## Table of Contents
 
+- [Getting Started](#getting-started)
 - [Authentication](#authentication)
 - [Users](#users)
 - [Products](#products)
@@ -15,6 +16,68 @@ A secure, RESTful backend API built for user authentication, product management,
 - [Analytics](#analytics)
 - [Data Models](#data-models)
 - [Error Handling](#error-handling)
+- [Security](#security)
+
+---
+
+## Getting Started
+
+### Prerequisites
+
+- [Node.js](https://nodejs.org/) v16 or higher
+- [MongoDB](https://www.mongodb.com/) running locally or a remote URI
+
+### Installation
+
+Clone the repository and install dependencies:
+
+```bash
+git clone https://github.com/your-username/ecommerce-backend-englishyaari.git
+cd ecommerce-backend-englishyaari
+npm install
+```
+
+### Environment Variables
+
+Create a `.env` file in the root directory and configure the following variables:
+
+```env
+# Database
+MONGO_URI=mongodb://localhost:27017/ecommerce
+
+# Authentication
+JWT_SECRET=your_jwt_secret_key
+
+# Server
+PORT=5000
+NODE_ENV=development
+```
+
+| Variable     | Required | Description                                   |
+|--------------|----------|-----------------------------------------------|
+| `MONGO_URI`  | ✅        | MongoDB connection string                     |
+| `JWT_SECRET` | ✅        | Secret key used to sign JWT tokens            |
+| `PORT`       | ❌        | Server port (defaults to `5000`)              |
+| `NODE_ENV`   | ❌        | Environment mode (`development`/`production`) |
+
+### Running the Project
+
+| Command           | Description                              |
+|-------------------|------------------------------------------|
+| `npm run dev`     | Start development server with hot reload |
+| `npm run build`   | Compile/build for production             |
+| `npm start`       | Start production server                  |
+
+```bash
+# Development
+npm run dev
+
+# Build
+npm run build
+
+# Production
+npm start
+```
 
 ---
 
@@ -43,12 +106,12 @@ Register a new user account.
 }
 ```
 
-| Field      | Type   | Required | Description                     |
-|------------|--------|----------|---------------------------------|
-| `name`     | string | ✅        | Full name of the user           |
-| `email`    | string | ✅        | Valid email address             |
-| `password` | string | ✅        | Account password                |
-| `role`     | string | ✅        | `"admin"` or `"user"`           |
+| Field      | Type   | Required | Description                   |
+|------------|--------|----------|-------------------------------|
+| `name`     | string | ✅        | Full name of the user         |
+| `email`    | string | ✅        | Valid email address           |
+| `password` | string | ✅        | Account password              |
+| `role`     | string | ✅        | `"admin"` or `"user"`         |
 
 **Responses:**
 
@@ -74,10 +137,10 @@ Authenticate an existing user and receive a JWT token.
 
 **Responses:**
 
-| Status | Description                           |
-|--------|---------------------------------------|
-| `200`  | Login successful, returns token       |
-| `400`  | Invalid credentials or validation error |
+| Status | Description                              |
+|--------|------------------------------------------|
+| `200`  | Login successful, returns token          |
+| `400`  | Invalid credentials or validation error  |
 
 **Success Response Example:**
 
@@ -119,10 +182,10 @@ Retrieve a list of all registered users.
 
 **Responses:**
 
-| Status | Description        |
-|--------|--------------------|
-| `200`  | List of all users  |
-| `403`  | Forbidden          |
+| Status | Description       |
+|--------|-------------------|
+| `200`  | List of all users |
+| `403`  | Forbidden         |
 
 ---
 
@@ -197,9 +260,9 @@ Retrieve all users with a specific role.
 
 **Responses:**
 
-| Status | Description                           |
-|--------|---------------------------------------|
-| `200`  | List of users matching specified role |
+| Status | Description                            |
+|--------|----------------------------------------|
+| `200`  | List of users matching specified role  |
 
 ---
 
@@ -213,9 +276,9 @@ Retrieve all available products. No authentication required.
 
 **Responses:**
 
-| Status | Description       |
-|--------|-------------------|
-| `200`  | List of products  |
+| Status | Description      |
+|--------|------------------|
+| `200`  | List of products |
 
 ---
 
@@ -233,11 +296,11 @@ Create a new product.
 }
 ```
 
-| Field      | Type   | Required | Description           |
-|------------|--------|----------|-----------------------|
-| `name`     | string | ✅        | Product name          |
-| `category` | string | ✅        | Product category      |
-| `price`    | number | ✅        | Price (in INR or base currency) |
+| Field      | Type   | Required | Description                          |
+|------------|--------|----------|--------------------------------------|
+| `name`     | string | ✅        | Product name                         |
+| `category` | string | ✅        | Product category                     |
+| `price`    | number | ✅        | Price (in INR or base currency)      |
 
 **Responses:**
 
@@ -317,8 +380,8 @@ Retrieve all orders in the system.
 
 **Responses:**
 
-| Status | Description       |
-|--------|-------------------|
+| Status | Description        |
+|--------|--------------------|
 | `200`  | List of all orders |
 
 ---
@@ -341,18 +404,18 @@ Place a new order for the authenticated user.
 }
 ```
 
-| Field      | Type   | Required | Description                                      |
-|------------|--------|----------|--------------------------------------------------|
-| `products` | array  | ✅        | Array of `{ productId, quantity }` objects       |
-| `status`   | string | ❌        | `"pending"`, `"completed"`, or `"cancelled"`     |
+| Field      | Type   | Required | Description                                       |
+|------------|--------|----------|---------------------------------------------------|
+| `products` | array  | ✅        | Array of `{ productId, quantity }` objects        |
+| `status`   | string | ❌        | `"pending"`, `"completed"`, or `"cancelled"`      |
 
 **Responses:**
 
-| Status | Description                         |
-|--------|-------------------------------------|
-| `201`  | Order created successfully          |
-| `400`  | Validation error or invalid product IDs |
-| `401`  | Unauthorized                        |
+| Status | Description                              |
+|--------|------------------------------------------|
+| `201`  | Order created successfully               |
+| `400`  | Validation error or invalid product IDs  |
+| `401`  | Unauthorized                             |
 
 ---
 
@@ -362,10 +425,10 @@ Retrieve orders belonging to the currently authenticated user.
 
 **Responses:**
 
-| Status | Description                    |
-|--------|--------------------------------|
-| `200`  | List of current user's orders  |
-| `401`  | Unauthorized                   |
+| Status | Description                   |
+|--------|-------------------------------|
+| `200`  | List of current user's orders |
+| `401`  | Unauthorized                  |
 
 ---
 
@@ -433,8 +496,8 @@ Get per-user order statistics including total orders placed and total amount spe
 | Field      | Type   | Required | Values            |
 |------------|--------|----------|-------------------|
 | `name`     | string | ✅        | —                 |
-| `email`    | string | ✅        | —                 |
-| `password` | string | ✅        | —                 |
+| `email`    | string | ✅        | Unique            |
+| `password` | string | ✅        | Hashed            |
 | `role`     | string | ✅        | `admin` or `user` |
 
 ### Product
@@ -450,15 +513,15 @@ Get per-user order statistics including total orders placed and total amount spe
 
 ### Order
 
-| Field         | Type     | Required | Description                                   |
-|---------------|----------|----------|-----------------------------------------------|
-| `_id`         | string   | —        | Auto-generated ID                             |
-| `userId`      | string   | ✅        | References user who placed the order          |
-| `products`    | array    | ✅        | Array of `{ productId, quantity }`            |
-| `totalAmount` | number   | ✅        | Calculated total for the order                |
-| `status`      | string   | —        | `pending`, `completed`, or `cancelled`        |
-| `createdAt`   | datetime | —        | Auto-set                                      |
-| `updatedAt`   | datetime | —        | Auto-set                                      |
+| Field         | Type     | Required | Description                              |
+|---------------|----------|----------|------------------------------------------|
+| `_id`         | string   | —        | Auto-generated ID                        |
+| `userId`      | string   | ✅        | References user who placed the order     |
+| `products`    | array    | ✅        | Array of `{ productId, quantity }`       |
+| `totalAmount` | number   | ✅        | Calculated total for the order           |
+| `status`      | string   | —        | `pending`, `completed`, or `cancelled`   |
+| `createdAt`   | datetime | —        | Auto-set                                 |
+| `updatedAt`   | datetime | —        | Auto-set                                 |
 
 ### MonthlyRevenue
 
@@ -499,14 +562,16 @@ All errors return a consistent JSON structure:
 | `401` | Unauthorized — Missing or invalid token    |
 | `403` | Forbidden — Insufficient permissions       |
 | `404` | Not Found — Resource does not exist        |
+| `500` | Internal Server Error — Unexpected failure |
 
 ---
 
 ## Security
 
 - All sensitive routes are protected with **JWT Bearer authentication**
-- Role-based access: `admin` users have broader permissions than `user` role
+- Role-based access control: `admin` users have broader permissions than `user` role
 - Tokens are passed via the `Authorization: Bearer <token>` header
+- Passwords are hashed before storage — never stored in plain text
 
 ---
 
