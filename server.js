@@ -87,7 +87,7 @@ const PORT = process.env.PORT || 5000;
 connectDB()
   .then(() => {
     app.listen(PORT, () => {
-      console.log(`🚀 Server running on https://ecommerce-backend-englishyaari.onrender.com/api-docs`);
+      console.log(`🚀 Server running on http://localhost:${PORT}/api-docs`);
     });
   })
   .catch((err) => {
