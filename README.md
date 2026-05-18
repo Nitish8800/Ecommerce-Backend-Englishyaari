@@ -32,7 +32,7 @@ A secure, RESTful backend API built for user authentication, product management,
 Clone the repository and install dependencies:
 
 ```bash
-git clone https://github.com/your-username/ecommerce-backend-englishyaari.git
+git clone [https://github.com/your-username/ecommerce-backend-englishyaari.git](https://github.com/Nitish8800/Ecommerce-Backend-Englishyaari.git)
 cd ecommerce-backend-englishyaari
 npm install
 ```
