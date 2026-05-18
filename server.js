@@ -33,6 +33,21 @@ if (missingEnvVars.length > 0) {
   process.exit(1);
 }
 
+const BASE_URL =
+  process.env.NODE_ENV === "production"
+    ? "https://ecommerce-backend-englishyaari.onrender.com"
+    : `http://localhost:${process.env.PORT || 5000}`;
+
+swaggerSpec.servers = [
+  {
+    url: BASE_URL,
+    description:
+      process.env.NODE_ENV === "production"
+        ? "Production Server"
+        : "Local Server"
+  }
+];
+
 app.use(
   cors({
     origin: process.env.FRONTEND_URL || "http://localhost:3000",
@@ -48,6 +63,7 @@ app.use(
     strict: true
   })
 );
+
 app.use(
   express.urlencoded({
     extended: true,
@@ -60,6 +76,7 @@ if (process.env.NODE_ENV === "development") {
     console.log(
       `${new Date().toISOString()} - ${req.method} ${req.originalUrl}`
     );
+
     next();
   });
 }
@@ -87,15 +104,15 @@ const PORT = process.env.PORT || 5000;
 connectDB()
   .then(() => {
     app.listen(PORT, () => {
-      const baseUrl =
-        process.env.NODE_ENV === "production"
-          ? "https://ecommerce-backend-englishyaari.onrender.com"
-          : `http://localhost:${PORT}`;
-
-      console.log(`🚀 Server running on ${baseUrl}/api-docs`);
+      console.log(
+        `🚀 Server running on ${BASE_URL}/api-docs`
+      );
     });
   })
   .catch((err) => {
-    console.error("❌ Failed to connect to MongoDB. Server not started.", err);
+    console.error(
+      "❌ Failed to connect to MongoDB. Server not started.",
+      err
+    );
     process.exit(1);
   });
